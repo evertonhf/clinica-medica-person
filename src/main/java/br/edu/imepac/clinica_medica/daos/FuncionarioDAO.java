@@ -2,6 +2,7 @@ package br.edu.imepac.clinica_medica.daos;
 
 import br.edu.imepac.clinica_medica.entidades.Funcionario;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +29,7 @@ public class FuncionarioDAO extends BaseDao {
             ps.setString(12, funcionario.getEstado());
             ps.setString(13, funcionario.getContato());
             ps.setString(14, funcionario.getEmail());
-            ps.setDate(15, null);
+            ps.setDate(15, Date.valueOf(funcionario.getDataNascimento()));
             ps.setString(16, funcionario.getTipoFuncionario());
             ps.setLong(17, funcionario.getEspecialidadeId());
             ps.setLong(18, funcionario.getPerfilId());
@@ -91,7 +92,7 @@ public class FuncionarioDAO extends BaseDao {
             ps.setString(12, funcionario.getEstado());
             ps.setString(13, funcionario.getContato());
             ps.setString(14, funcionario.getEmail());
-            ps.setDate(15, null);
+            ps.setDate(15, Date.valueOf(funcionario.getDataNascimento()));
             ps.setString(16, funcionario.getTipoFuncionario());
             ps.setLong(17, funcionario.getEspecialidadeId());
             ps.setLong(18, funcionario.getPerfilId());
