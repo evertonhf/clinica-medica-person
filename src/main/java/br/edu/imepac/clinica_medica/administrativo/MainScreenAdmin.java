@@ -233,7 +233,6 @@ public class MainScreenAdmin extends javax.swing.JFrame {
 
     private void listarFuncionarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarFuncionarioButtonActionPerformed
         FuncionarioListagemScreen funcionarioListagemScreen = new FuncionarioListagemScreen();
-        funcionarioListagemScreen.pack();
         funcionarioListagemScreen.setVisible(true);
     }//GEN-LAST:event_listarFuncionarioButtonActionPerformed
 
@@ -243,7 +242,6 @@ public class MainScreenAdmin extends javax.swing.JFrame {
 
     private void cadastrarFuncionarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarFuncionarioButtonActionPerformed
         FuncionarioCadastroScreen funcionarioCadastroScreen = new FuncionarioCadastroScreen();
-        funcionarioCadastroScreen.pack();
         funcionarioCadastroScreen.setVisible(true);
 
     }//GEN-LAST:event_cadastrarFuncionarioButtonActionPerformed

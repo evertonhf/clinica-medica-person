@@ -23,56 +23,6 @@ import java.util.List;
  */
 public class FuncionarioCadastroScreen extends ScreenBase {
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField bairroTextField;
-    private javax.swing.JButton cancelarButton;
-    private javax.swing.JTextField cidadeTextField;
-    private javax.swing.JTextField complementoTextField;
-    private javax.swing.JFormattedTextField contatoTextField1;
-    private javax.swing.JFormattedTextField dataNascimentoTextField;
-    private javax.swing.JTextField emailTextField;
-    private javax.swing.JComboBox<Especialidade> especialidadeField;
-    private javax.swing.JLabel especialidadeLabel;
-    private javax.swing.JComboBox<String> estadoTextField1;
-    private javax.swing.JFormattedTextField idadeTextField;
-    private javax.swing.JFormattedTextField identificacaoTextField;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JButton limparBotton;
-    private javax.swing.JTextField logradouroTextField;
-    private javax.swing.JTextField nomeCompletoTextfield;
-    private javax.swing.JTextField numeroTextField;
-    private javax.swing.JComboBox<Perfil> perfilField;
-    private javax.swing.JButton salvarButton;
-    private javax.swing.JFormattedTextField senhaTextField;
-    private javax.swing.JComboBox<String> sexoTextField;
-    private javax.swing.JComboBox<String> tipoFuncionarioField;
-    private javax.swing.JTextField usuarioTextField;
-    private List<Perfil> perfis;
-    private PerfilDAO perfilDAO;
-    private List<Especialidade> especialidades;
-    private EspecialidadeDAO especialidadeDAO;
-    private FuncionarioDAO funcionarioDAO;
     /**
      * Creates new form FuncionarioCadastroScreen
      */
@@ -86,41 +36,6 @@ public class FuncionarioCadastroScreen extends ScreenBase {
         loadDataFieldsFromDB();
 
         positionScreen(315, 140, 695, 900);
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FuncionarioCadastroScreen().setVisible(true);
-            }
-        });
     }
 
     private void loadDataFieldsFromDB() {
@@ -205,7 +120,7 @@ public class FuncionarioCadastroScreen extends ScreenBase {
         tipoFuncionarioField = new javax.swing.JComboBox<>();
         jLabel17 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(null);
 
@@ -353,7 +268,7 @@ public class FuncionarioCadastroScreen extends ScreenBase {
         jLabel15.setBounds(680, 500, 54, 25);
 
         sexoTextField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        sexoTextField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Masculino", "Feminino"}));
+        sexoTextField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
         getContentPane().add(sexoTextField);
         sexoTextField.setBounds(1020, 165, 178, 50);
 
@@ -439,7 +354,7 @@ public class FuncionarioCadastroScreen extends ScreenBase {
         jLabel19.setBounds(620, 630, 170, 25);
 
         estadoTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        estadoTextField1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"}));
+        estadoTextField1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins" }));
         getContentPane().add(estadoTextField1);
         estadoTextField1.setBounds(750, 490, 450, 50);
 
@@ -454,6 +369,7 @@ public class FuncionarioCadastroScreen extends ScreenBase {
         especialidadeField.setBounds(750, 690, 450, 50);
 
         perfilField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        perfilField.setModel(perfilField.getModel());
         getContentPane().add(perfilField);
         perfilField.setBounds(160, 690, 450, 50);
 
@@ -464,7 +380,7 @@ public class FuncionarioCadastroScreen extends ScreenBase {
         jLabel21.setBounds(460, 110, 130, 25);
 
         tipoFuncionarioField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        tipoFuncionarioField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"MÉDICO", "ATENDENTE"}));
+        tipoFuncionarioField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MÉDICO", "ATENDENTE" }));
         tipoFuncionarioField.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 stateChanged(evt);
@@ -480,7 +396,6 @@ public class FuncionarioCadastroScreen extends ScreenBase {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    // End of variables declaration//GEN-END:variables
 
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
         this.dispose();
@@ -539,6 +454,94 @@ public class FuncionarioCadastroScreen extends ScreenBase {
         LocalDate currentDate = LocalDate.now();
         idadeTextField.setText(String.valueOf(Period.between(dataNascimento, currentDate).getYears()));
     }//GEN-LAST:event_dataNascimentoTextFieldFocusLost
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new FuncionarioCadastroScreen().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField bairroTextField;
+    private javax.swing.JButton cancelarButton;
+    private javax.swing.JTextField cidadeTextField;
+    private javax.swing.JTextField complementoTextField;
+    private javax.swing.JFormattedTextField contatoTextField1;
+    private javax.swing.JFormattedTextField dataNascimentoTextField;
+    private javax.swing.JTextField emailTextField;
+    private javax.swing.JComboBox<Especialidade> especialidadeField;
+    private javax.swing.JLabel especialidadeLabel;
+    private javax.swing.JComboBox<String> estadoTextField1;
+    private javax.swing.JFormattedTextField idadeTextField;
+    private javax.swing.JFormattedTextField identificacaoTextField;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JButton limparBotton;
+    private javax.swing.JTextField logradouroTextField;
+    private javax.swing.JTextField nomeCompletoTextfield;
+    private javax.swing.JTextField numeroTextField;
+    private javax.swing.JComboBox<Perfil> perfilField;
+    private javax.swing.JButton salvarButton;
+    private javax.swing.JFormattedTextField senhaTextField;
+    private javax.swing.JComboBox<String> sexoTextField;
+    private javax.swing.JComboBox<String> tipoFuncionarioField;
+    private javax.swing.JTextField usuarioTextField;
+    // End of variables declaration//GEN-END:variables
+
+    private List<Perfil> perfis;
+    private PerfilDAO perfilDAO;
+    private List<Especialidade> especialidades;
+    private EspecialidadeDAO especialidadeDAO;
+    private FuncionarioDAO funcionarioDAO;
 
 
 }

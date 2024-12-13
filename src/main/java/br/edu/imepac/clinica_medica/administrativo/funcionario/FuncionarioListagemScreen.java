@@ -78,7 +78,8 @@ public class FuncionarioListagemScreen extends ScreenBase {
         tableFuncionarios = new javax.swing.JTable();
         cancelarButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
         setResizable(false);
         getContentPane().setLayout(null);
 
@@ -121,15 +122,15 @@ public class FuncionarioListagemScreen extends ScreenBase {
         editarButton.setBounds(950, 340, 250, 80);
 
         tableFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {},
-                        {},
-                        {},
-                        {}
-                },
-                new String[]{
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
 
-                }
+            }
         ));
         jScrollPane1.setViewportView(tableFuncionarios);
 

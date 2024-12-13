@@ -95,7 +95,7 @@ public class FuncionarioEditarScreen extends ScreenBase {
         tipoFuncionarioField = new javax.swing.JComboBox<>();
         jLabel17 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(null);
 
@@ -243,7 +243,7 @@ public class FuncionarioEditarScreen extends ScreenBase {
         jLabel15.setBounds(680, 500, 54, 25);
 
         sexoTextField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        sexoTextField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Masculino", "Feminino"}));
+        sexoTextField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
         getContentPane().add(sexoTextField);
         sexoTextField.setBounds(1020, 165, 178, 50);
 
@@ -329,7 +329,7 @@ public class FuncionarioEditarScreen extends ScreenBase {
         jLabel19.setBounds(620, 630, 170, 25);
 
         estadoTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        estadoTextField1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"}));
+        estadoTextField1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins" }));
         getContentPane().add(estadoTextField1);
         estadoTextField1.setBounds(750, 490, 450, 50);
 
@@ -355,7 +355,7 @@ public class FuncionarioEditarScreen extends ScreenBase {
         jLabel21.setBounds(460, 110, 130, 25);
 
         tipoFuncionarioField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        tipoFuncionarioField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"MÉDICO", "ATENDENTE", "OUTROS"}));
+        tipoFuncionarioField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MÉDICO", "ATENDENTE" }));
         tipoFuncionarioField.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 stateChanged(evt);
