@@ -1,17 +1,22 @@
 package br.edu.imepac.clinica_medica.daos;
 
 import br.edu.imepac.clinica_medica.entidades.Perfil;
-import java.sql.*;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PerfilDAO extends BaseDao  {
+public class PerfilDAO extends BaseDao {
 
 
     public void create(Perfil perfil) throws SQLException {
         String sql = "INSERT INTO Perfil (nome, cadastrarFuncionario, lerFuncionario, atualizarFuncionario, deletarFuncionario, listarFuncionario, cadastrarPaciente, lerPaciente, atualizarPaciente, deletarPaciente, listarPaciente, cadastrarConsulta, lerConsulta, atualizarConsulta, deletarConsulta, listarConsulta, cadastrarEspecialidade, lerEspecialidade, atualizarEspecialidade, deletarEspecialidade, listarEspecialidade, cadastrarConvenio, lerConvenio, atualizarConvenio, deletarConvenio, listarConvenio, cadastrarProntuario, lerProntuario, atualizarProntuario, deletarProntuario, listarProntuario) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, perfil.getNome());
             stmt.setBoolean(2, perfil.isCadastrarFuncionario());
             stmt.setBoolean(3, perfil.isLerFuncionario());
@@ -44,14 +49,17 @@ public class PerfilDAO extends BaseDao  {
             stmt.setBoolean(30, perfil.isDeletarProntuario());
             stmt.setBoolean(31, perfil.isListarProntuario());
             stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public List<Perfil> readAll() throws SQLException {
+    public List<Perfil> readAll() {
         List<Perfil> perfis = new ArrayList<>();
         String sql = "SELECT * FROM perfil";
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Perfil perfil = new Perfil(
                         rs.getLong("id"),
@@ -89,14 +97,17 @@ public class PerfilDAO extends BaseDao  {
                 );
                 perfis.add(perfil);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return perfis;
     }
 
-    public Perfil read(int id) throws SQLException {
+    public Perfil read(Long id) {
         String sql = "SELECT * FROM Perfil WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return new Perfil(
@@ -134,15 +145,20 @@ public class PerfilDAO extends BaseDao  {
                         rs.getBoolean("listarProntuario")
                 );
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         String sql = "DELETE FROM Perfil WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setLong(1, id);
             stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -13,7 +13,6 @@ import br.edu.imepac.clinica_medica.entidades.Perfil;
 import br.edu.imepac.clinica_medica.telas.ScreenBase;
 
 import javax.swing.*;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -24,15 +23,132 @@ import java.util.List;
  */
 public class FuncionarioCadastroScreen extends ScreenBase {
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField bairroTextField;
+    private javax.swing.JButton cancelarButton;
+    private javax.swing.JTextField cidadeTextField;
+    private javax.swing.JTextField complementoTextField;
+    private javax.swing.JFormattedTextField contatoTextField1;
+    private javax.swing.JFormattedTextField dataNascimentoTextField;
+    private javax.swing.JTextField emailTextField;
+    private javax.swing.JComboBox<Especialidade> especialidadeField;
+    private javax.swing.JLabel especialidadeLabel;
+    private javax.swing.JComboBox<String> estadoTextField1;
+    private javax.swing.JFormattedTextField idadeTextField;
+    private javax.swing.JFormattedTextField identificacaoTextField;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JButton limparBotton;
+    private javax.swing.JTextField logradouroTextField;
+    private javax.swing.JTextField nomeCompletoTextfield;
+    private javax.swing.JTextField numeroTextField;
+    private javax.swing.JComboBox<Perfil> perfilField;
+    private javax.swing.JButton salvarButton;
+    private javax.swing.JFormattedTextField senhaTextField;
+    private javax.swing.JComboBox<String> sexoTextField;
+    private javax.swing.JComboBox<String> tipoFuncionarioField;
+    private javax.swing.JTextField usuarioTextField;
+    private List<Perfil> perfis;
+    private PerfilDAO perfilDAO;
+    private List<Especialidade> especialidades;
+    private EspecialidadeDAO especialidadeDAO;
+    private FuncionarioDAO funcionarioDAO;
     /**
      * Creates new form FuncionarioCadastroScreen
      */
     public FuncionarioCadastroScreen() {
+        perfilDAO = new PerfilDAO();
+        especialidadeDAO = new EspecialidadeDAO();
+        funcionarioDAO = new FuncionarioDAO();
+
         initComponents();
 
         loadDataFieldsFromDB();
 
         positionScreen(315, 140, 695, 900);
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new FuncionarioCadastroScreen().setVisible(true);
+            }
+        });
+    }
+
+    private void loadDataFieldsFromDB() {
+        perfis = perfilDAO.readAll();
+
+        perfilField.removeAllItems();
+        for (Perfil perfil : perfis) {
+            perfilField.addItem(perfil);
+        }
+
+        especialidades = especialidadeDAO.readAll();
+        especialidadeField.removeAllItems();
+        for (Especialidade especialidade : especialidades) {
+            especialidadeField.addItem(especialidade);
+        }
+    }
+
+    private boolean camposValidos() {
+        /* Verifica se os campos obrigatórios estão preenchidos */
+        if (contatoTextField1.getText().isEmpty() || perfilField.getSelectedItem() == null || nomeCompletoTextfield.getText().isEmpty() || identificacaoTextField.getText().isEmpty() || emailTextField.getText().isEmpty() || dataNascimentoTextField.getText().isEmpty() || senhaTextField.getText().isEmpty() || usuarioTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos obrigatórios", "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (tipoFuncionarioField != null && tipoFuncionarioField.getSelectedItem().toString().equalsIgnoreCase("MÉDICO") && especialidadeField.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Selecione uma especialidade", "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -364,6 +480,7 @@ public class FuncionarioCadastroScreen extends ScreenBase {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    // End of variables declaration//GEN-END:variables
 
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
         this.dispose();
@@ -398,7 +515,6 @@ public class FuncionarioCadastroScreen extends ScreenBase {
                     ((Perfil) perfilField.getSelectedItem()).getId()
             );
 
-            FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
             funcionarioDAO.create(funcionario);
             JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso.");
 
@@ -424,123 +540,5 @@ public class FuncionarioCadastroScreen extends ScreenBase {
         idadeTextField.setText(String.valueOf(Period.between(dataNascimento, currentDate).getYears()));
     }//GEN-LAST:event_dataNascimentoTextFieldFocusLost
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioCadastroScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FuncionarioCadastroScreen().setVisible(true);
-            }
-        });
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField bairroTextField;
-    private javax.swing.JButton cancelarButton;
-    private javax.swing.JTextField cidadeTextField;
-    private javax.swing.JTextField complementoTextField;
-    private javax.swing.JFormattedTextField contatoTextField1;
-    private javax.swing.JFormattedTextField dataNascimentoTextField;
-    private javax.swing.JTextField emailTextField;
-    private javax.swing.JComboBox<Especialidade> especialidadeField;
-    private javax.swing.JLabel especialidadeLabel;
-    private javax.swing.JComboBox<String> estadoTextField1;
-    private javax.swing.JFormattedTextField idadeTextField;
-    private javax.swing.JFormattedTextField identificacaoTextField;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JButton limparBotton;
-    private javax.swing.JTextField logradouroTextField;
-    private javax.swing.JTextField nomeCompletoTextfield;
-    private javax.swing.JTextField numeroTextField;
-    private javax.swing.JComboBox<Perfil> perfilField;
-    private javax.swing.JButton salvarButton;
-    private javax.swing.JFormattedTextField senhaTextField;
-    private javax.swing.JComboBox<String> sexoTextField;
-    private javax.swing.JComboBox<String> tipoFuncionarioField;
-    private javax.swing.JTextField usuarioTextField;
-    // End of variables declaration//GEN-END:variables
-
-    private List<Perfil> perfis;
-    private List<Especialidade> especialidades;
-
-    private void loadDataFieldsFromDB() {
-        try {
-            PerfilDAO perfilDAO = new PerfilDAO();
-            perfis = perfilDAO.readAll();
-            //perfilField deverá conter os itens de perfis
-            perfilField.removeAllItems();
-            for (Perfil perfil : perfis) {
-                perfilField.addItem(perfil);
-            }
-
-            EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO();
-            especialidades = especialidadeDAO.readAll();
-            especialidadeField.removeAllItems();
-            for (Especialidade especialidade : especialidades) {
-                especialidadeField.addItem(especialidade);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Erro ao carregar dados do banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private boolean camposValidos() {
-        /* Verifica se os campos obrigatórios estão preenchidos */
-        if (contatoTextField1.getText().isEmpty() || perfilField.getSelectedItem() == null || nomeCompletoTextfield.getText().isEmpty() || identificacaoTextField.getText().isEmpty() || emailTextField.getText().isEmpty() || dataNascimentoTextField.getText().isEmpty() || senhaTextField.getText().isEmpty() || usuarioTextField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Preencha todos os campos obrigatórios", "Erro", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        if (tipoFuncionarioField != null && tipoFuncionarioField.getSelectedItem().toString().equalsIgnoreCase("MÉDICO") && especialidadeField.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(this, "Selecione uma especialidade", "Erro", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        return true;
-    }
 }

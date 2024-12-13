@@ -4,12 +4,13 @@
  */
 package br.edu.imepac.clinica_medica.administrativo.funcionario;
 
+import br.edu.imepac.clinica_medica.daos.EspecialidadeDAO;
 import br.edu.imepac.clinica_medica.daos.FuncionarioDAO;
-import br.edu.imepac.clinica_medica.entidades.Especialidade;
+import br.edu.imepac.clinica_medica.daos.PerfilDAO;
 import br.edu.imepac.clinica_medica.entidades.Funcionario;
-import br.edu.imepac.clinica_medica.entidades.Perfil;
 import br.edu.imepac.clinica_medica.telas.ScreenBase;
 
+import javax.swing.*;
 import java.util.List;
 
 /**
@@ -21,11 +22,43 @@ public class FuncionarioListagemScreen extends ScreenBase {
      * Creates new form FuncionarioCadastroScreen
      */
     public FuncionarioListagemScreen() {
+        perfilDAO = new PerfilDAO();
+        especialidadeDAO = new EspecialidadeDAO();
+        funcionarioDAO = new FuncionarioDAO();
+
         initComponents();
 
         loadDataFieldsFromDB();
 
         positionScreen(315, 140, 695, 900);
+    }
+
+    private void loadDataFieldsFromDB() {
+        List<Funcionario> funcionarios = funcionarioDAO.readAll();
+
+        for (Funcionario funcionario : funcionarios) {
+            if (funcionario.getPerfilId() != null) {
+                funcionario.setPerfil(perfilDAO.read(funcionario.getPerfilId()));
+            }
+        }
+        for (Funcionario funcionario : funcionarios) {
+            if (funcionario.getEspecialidadeId() != null) {
+                funcionario.setEspecialidade(especialidadeDAO.read(funcionario.getEspecialidadeId()));
+            }
+        }
+
+        tableFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
+                        new Object[funcionarios.size()][4],
+                        new String[]{"Id", "Nome", "E-mail", "Perfil"}
+                )
+        );
+
+        for (int i = 0; i < funcionarios.size(); i++) {
+            tableFuncionarios.setValueAt(funcionarios.get(i).getId(), i, 0);
+            tableFuncionarios.setValueAt(funcionarios.get(i).getNome(), i, 1);
+            tableFuncionarios.setValueAt(funcionarios.get(i).getEmail(), i, 2);
+            tableFuncionarios.setValueAt(funcionarios.get(i).getPerfil().getNome(), i, 3);
+        }
     }
 
     /**
@@ -40,10 +73,10 @@ public class FuncionarioListagemScreen extends ScreenBase {
         jLabel1 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         cancelarButton = new javax.swing.JButton();
-        salvarButton = new javax.swing.JButton();
-        jLabel17 = new javax.swing.JLabel();
+        editarButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableFuncionarios = new javax.swing.JTable();
+        cancelarButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -59,61 +92,64 @@ public class FuncionarioListagemScreen extends ScreenBase {
         cancelarButton.setBackground(new java.awt.Color(204, 51, 0));
         cancelarButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         cancelarButton.setForeground(new java.awt.Color(255, 255, 255));
-        cancelarButton.setIcon(new javax.swing.ImageIcon("D:\\Imepac\\BACK\\2024-02\\clinica-medica-poo\\src\\main\\resources\\images\\encerrar.png")); // NOI18N
-        cancelarButton.setText("Cancelar e fechar");
+        cancelarButton.setIcon(new javax.swing.ImageIcon("D:\\Imepac\\BACK\\2024-02\\clinica-medica-poo\\src\\main\\resources\\images\\excluir.png")); // NOI18N
+        cancelarButton.setText("Excluir");
         cancelarButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         cancelarButton.setIconTextGap(20);
         cancelarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelarButtonActionPerformed(evt);
+                deleteFuncionario(evt);
             }
         });
         getContentPane().add(cancelarButton);
-        cancelarButton.setBounds(950, 430, 250, 80);
+        cancelarButton.setBounds(950, 250, 250, 80);
 
-        salvarButton.setBackground(new java.awt.Color(153, 204, 255));
-        salvarButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        salvarButton.setForeground(new java.awt.Color(51, 0, 102));
-        salvarButton.setIcon(new javax.swing.ImageIcon("D:\\Imepac\\BACK\\2024-02\\clinica-medica-poo\\src\\main\\resources\\images\\save.png")); // NOI18N
-        salvarButton.setText("Salvar");
-        salvarButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        salvarButton.setIconTextGap(20);
-        salvarButton.addActionListener(new java.awt.event.ActionListener() {
+        editarButton.setBackground(new java.awt.Color(153, 204, 255));
+        editarButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        editarButton.setForeground(new java.awt.Color(51, 0, 102));
+        editarButton.setIcon(new javax.swing.ImageIcon("D:\\Imepac\\BACK\\2024-02\\clinica-medica-poo\\src\\main\\resources\\images\\save.png")); // NOI18N
+        editarButton.setText("Editar");
+        editarButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        editarButton.setIconTextGap(20);
+        editarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                salvarButtonActionPerformed(evt);
+                editarButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(salvarButton);
-        salvarButton.setBounds(950, 340, 250, 80);
+        getContentPane().add(editarButton);
+        editarButton.setBounds(950, 340, 250, 80);
 
-        jLabel17.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel17.setText("Campos em vermelho são obrigatórios o preenchimento.");
-        getContentPane().add(jLabel17);
-        jLabel17.setBounds(30, 50, 360, 16);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
+                        {},
+                        {},
+                        {},
+                        {}
                 },
                 new String[]{
-                        "Id", "Nome", "E-mail", "Perfil"
-                }
-        ) {
-            boolean[] canEdit = new boolean[]{
-                    false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
+                }
+        ));
+        jScrollPane1.setViewportView(tableFuncionarios);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(20, 110, 910, 402);
+
+        cancelarButton1.setBackground(new java.awt.Color(255, 153, 102));
+        cancelarButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cancelarButton1.setForeground(new java.awt.Color(255, 255, 255));
+        cancelarButton1.setIcon(new javax.swing.ImageIcon("D:\\Imepac\\BACK\\2024-02\\clinica-medica-poo\\src\\main\\resources\\images\\encerrar.png")); // NOI18N
+        cancelarButton1.setText("Fechar");
+        cancelarButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        cancelarButton1.setIconTextGap(20);
+        cancelarButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cancelarButton1);
+        cancelarButton1.setBounds(950, 430, 250, 80);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -122,8 +158,29 @@ public class FuncionarioListagemScreen extends ScreenBase {
         this.dispose();
     }//GEN-LAST:event_cancelarButtonActionPerformed
 
-    private void salvarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarButtonActionPerformed
-    }//GEN-LAST:event_salvarButtonActionPerformed
+    private void editarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarButtonActionPerformed
+        if (tableFuncionarios.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um funcionário para editar.");
+        } else {
+            Long id = (Long) tableFuncionarios.getValueAt(tableFuncionarios.getSelectedRow(), 0);
+            new FuncionarioEditarScreen(id).setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_editarButtonActionPerformed
+
+    private void cancelarButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButton1ActionPerformed
+        dispose();
+    }//GEN-LAST:event_cancelarButton1ActionPerformed
+
+    private void deleteFuncionario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFuncionario
+        if (tableFuncionarios.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um funcionário para excluir.");
+        } else {
+            Long id = (Long) tableFuncionarios.getValueAt(tableFuncionarios.getSelectedRow(), 0);
+            funcionarioDAO.delete(id);
+            loadDataFieldsFromDB();
+        }
+    }//GEN-LAST:event_deleteFuncionario
 
     /**
      * @param args the command line arguments
@@ -163,42 +220,16 @@ public class FuncionarioListagemScreen extends ScreenBase {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelarButton;
+    private javax.swing.JButton cancelarButton1;
+    private javax.swing.JButton editarButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JButton salvarButton;
+    private javax.swing.JTable tableFuncionarios;
     // End of variables declaration//GEN-END:variables
 
-    private List<Perfil> perfis;
-    private List<Especialidade> especialidades;
 
-    private void loadDataFieldsFromDB() {
-        FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-        List<Funcionario> funcionarios = funcionarioDAO.readAll();
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[funcionarios.size()][4],
-                new String[]{
-                        "Id", "Nome", "E-mail", "Perfil"
-                }
-        ) {
-            boolean[] canEdit = new boolean[]{
-                    false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        });
-
-        for (int i = 0; i < funcionarios.size(); i++) {
-            jTable1.setValueAt(funcionarios.get(i).getId(), i, 0);
-            jTable1.setValueAt(funcionarios.get(i).getNome(), i, 1);
-            jTable1.setValueAt(funcionarios.get(i).getEmail(), i, 2);
-            jTable1.setValueAt(funcionarios.get(i).getPerfil().getNome(), i, 3);
-        }
-    }
-
+    private EspecialidadeDAO especialidadeDAO;
+    private FuncionarioDAO funcionarioDAO;
+    private PerfilDAO perfilDAO;
 }

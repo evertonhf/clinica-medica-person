@@ -13,7 +13,6 @@ import br.edu.imepac.clinica_medica.entidades.Perfil;
 import br.edu.imepac.clinica_medica.telas.ScreenBase;
 
 import javax.swing.*;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -23,14 +22,15 @@ import java.util.List;
  * @author ehf_v
  */
 public class FuncionarioEditarScreen extends ScreenBase {
-
-    private Long idFuncionario;
-
     /**
      * Creates new form FuncionarioCadastroScreen
      */
     public FuncionarioEditarScreen(Long id) {
         this.idFuncionario = id;
+
+        perfilDAO = new PerfilDAO();
+        especialidadeDAO = new EspecialidadeDAO();
+        funcionarioDAO = new FuncionarioDAO();
 
         initComponents();
 
@@ -406,7 +406,6 @@ public class FuncionarioEditarScreen extends ScreenBase {
                     ((Perfil) perfilField.getSelectedItem()).getId()
             );
 
-            FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
             funcionarioDAO.update(funcionario);
             JOptionPane.showMessageDialog(null, "Funcionário atualizado com sucesso.");
 
@@ -415,12 +414,12 @@ public class FuncionarioEditarScreen extends ScreenBase {
     }//GEN-LAST:event_salvarButtonActionPerformed
 
     private void stateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_stateChanged
-        if (tipoFuncionarioField.getSelectedItem().toString().equalsIgnoreCase("ATENDENTE")) {
-            especialidadeLabel.setVisible(false);
-            especialidadeField.setVisible(false);
-        } else {
+        if (tipoFuncionarioField.getSelectedItem().toString().equalsIgnoreCase("MÉDICO")) {
             especialidadeLabel.setVisible(true);
             especialidadeField.setVisible(true);
+        } else {
+            especialidadeLabel.setVisible(false);
+            especialidadeField.setVisible(false);
         }
     }//GEN-LAST:event_stateChanged
 
@@ -431,6 +430,78 @@ public class FuncionarioEditarScreen extends ScreenBase {
         LocalDate currentDate = LocalDate.now();
         idadeTextField.setText(String.valueOf(Period.between(dataNascimento, currentDate).getYears()));
     }//GEN-LAST:event_dataNascimentoTextFieldFocusLost
+
+    private void loadDataFieldsFromDB() {
+        perfis = perfilDAO.readAll();
+        //perfilField deverá conter os itens de perfis
+        perfilField.removeAllItems();
+        for (Perfil perfil : perfis) {
+            perfilField.addItem(perfil);
+        }
+
+        especialidades = especialidadeDAO.readAll();
+        especialidadeField.removeAllItems();
+        for (Especialidade especialidade : especialidades) {
+            especialidadeField.addItem(especialidade);
+        }
+    }
+
+    private boolean camposValidos() {
+        /* Verifica se os campos obrigatórios estão preenchidos */
+        if (contatoTextField1.getText().isEmpty() || perfilField.getSelectedItem() == null || nomeCompletoTextfield.getText().isEmpty() || identificacaoTextField.getText().isEmpty() || emailTextField.getText().isEmpty() || dataNascimentoTextField.getText().isEmpty() || senhaTextField.getText().isEmpty() || usuarioTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos obrigatórios", "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (tipoFuncionarioField != null && tipoFuncionarioField.getSelectedItem().toString().equalsIgnoreCase("MÉDICO") && especialidadeField.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Selecione uma especialidade", "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
+    private void loadDataFuncionario() {
+        Funcionario funcionario = funcionarioDAO.readById(this.idFuncionario);
+
+        if (funcionario != null) {
+            nomeCompletoTextfield.setText(funcionario.getNome());
+            idadeTextField.setText(String.valueOf(funcionario.getIdade()));
+            identificacaoTextField.setText(funcionario.getCpf());
+            sexoTextField.setSelectedItem(funcionario.getSexo());
+            emailTextField.setText(funcionario.getEmail());
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedDate = funcionario.getDataNascimento().format(formatter);
+            dataNascimentoTextField.setText(formattedDate);
+
+            senhaTextField.setText(String.valueOf(funcionario.getSenha()));
+            logradouroTextField.setText(funcionario.getRua());
+            numeroTextField.setText(funcionario.getNumero());
+            complementoTextField.setText(funcionario.getComplemento());
+            bairroTextField.setText(funcionario.getBairro());
+            cidadeTextField.setText(funcionario.getCidade());
+            estadoTextField1.setSelectedItem(funcionario.getEstado());
+            contatoTextField1.setText(funcionario.getContato());
+            usuarioTextField.setText(funcionario.getUsuario());
+            tipoFuncionarioField.setSelectedItem((String) funcionario.getTipoFuncionario());
+
+            for (Perfil perfil : perfis) {
+                if (perfil.getId().equals(funcionario.getPerfilId())) {
+                    perfilField.setSelectedItem(perfil);
+                    break;
+                }
+            }
+
+            for (Especialidade especialidade : especialidades) {
+                if (especialidade.getId().equals(funcionario.getEspecialidadeId())) {
+                    especialidadeField.setSelectedItem(especialidade);
+                    break;
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Funcionário não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -515,86 +586,10 @@ public class FuncionarioEditarScreen extends ScreenBase {
     private javax.swing.JTextField usuarioTextField;
     // End of variables declaration//GEN-END:variables
 
+    private Long idFuncionario;
     private List<Perfil> perfis;
     private List<Especialidade> especialidades;
-
-    private void loadDataFieldsFromDB() {
-        try {
-            PerfilDAO perfilDAO = new PerfilDAO();
-            perfis = perfilDAO.readAll();
-            //perfilField deverá conter os itens de perfis
-            perfilField.removeAllItems();
-            for (Perfil perfil : perfis) {
-                perfilField.addItem(perfil);
-            }
-
-            EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO();
-            especialidades = especialidadeDAO.readAll();
-            especialidadeField.removeAllItems();
-            for (Especialidade especialidade : especialidades) {
-                especialidadeField.addItem(especialidade);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Erro ao carregar dados do banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private boolean camposValidos() {
-        /* Verifica se os campos obrigatórios estão preenchidos */
-        if (contatoTextField1.getText().isEmpty() || perfilField.getSelectedItem() == null || nomeCompletoTextfield.getText().isEmpty() || identificacaoTextField.getText().isEmpty() || emailTextField.getText().isEmpty() || dataNascimentoTextField.getText().isEmpty() || senhaTextField.getText().isEmpty() || usuarioTextField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Preencha todos os campos obrigatórios", "Erro", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        if (tipoFuncionarioField != null && tipoFuncionarioField.getSelectedItem().toString().equalsIgnoreCase("MÉDICO") && especialidadeField.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(this, "Selecione uma especialidade", "Erro", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        return true;
-    }
-
-    private void loadDataFuncionario() {
-        FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-        Funcionario funcionario = funcionarioDAO.readById(this.idFuncionario);
-
-        if (funcionario != null) {
-            nomeCompletoTextfield.setText(funcionario.getNome());
-            idadeTextField.setText(String.valueOf(funcionario.getIdade()));
-            identificacaoTextField.setText(funcionario.getCpf());
-            sexoTextField.setSelectedItem(funcionario.getSexo());
-            emailTextField.setText(funcionario.getEmail());
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String formattedDate = funcionario.getDataNascimento().format(formatter);
-            dataNascimentoTextField.setText(formattedDate);
-
-            senhaTextField.setText(String.valueOf(funcionario.getSenha()));
-            logradouroTextField.setText(funcionario.getRua());
-            numeroTextField.setText(funcionario.getNumero());
-            complementoTextField.setText(funcionario.getComplemento());
-            bairroTextField.setText(funcionario.getBairro());
-            cidadeTextField.setText(funcionario.getCidade());
-            estadoTextField1.setSelectedItem(funcionario.getEstado());
-            contatoTextField1.setText(funcionario.getContato());
-            usuarioTextField.setText(funcionario.getUsuario());
-            tipoFuncionarioField.setSelectedItem((String) funcionario.getTipoFuncionario());
-
-            for (Perfil perfil : perfis) {
-                if (perfil.getId().equals(funcionario.getPerfilId())) {
-                    perfilField.setSelectedItem(perfil);
-                    break;
-                }
-            }
-
-            for (Especialidade especialidade : especialidades) {
-                if (especialidade.getId().equals(funcionario.getEspecialidadeId())) {
-                    especialidadeField.setSelectedItem(especialidade);
-                    break;
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Funcionário não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
-            this.dispose();
-        }
-    }
+    private EspecialidadeDAO especialidadeDAO;
+    private FuncionarioDAO funcionarioDAO;
+    private PerfilDAO perfilDAO;
 }
