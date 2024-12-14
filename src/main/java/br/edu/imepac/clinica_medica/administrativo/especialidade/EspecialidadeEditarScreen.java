@@ -15,8 +15,6 @@ import javax.swing.*;
  */
 public class EspecialidadeEditarScreen extends ScreenBase {
 
-    private Long especialidadeId;
-
     /**
      * Creates new form FuncionarioCadastroScreen
      */
@@ -28,8 +26,11 @@ public class EspecialidadeEditarScreen extends ScreenBase {
         especialidadeId = id;
         especialidadeDAO = new EspecialidadeDAO();
 
-        Especialidade especialidade = especialidadeDAO.read(especialidadeId);
+        setFieldsFromForm();
+    }
 
+    private void setFieldsFromForm() {
+        Especialidade especialidade = especialidadeDAO.read(especialidadeId);
         nomeField.setText(especialidade.getNome());
         descricaoField.setText(especialidade.getDescricao());
     }
@@ -178,4 +179,5 @@ public class EspecialidadeEditarScreen extends ScreenBase {
     // End of variables declaration//GEN-END:variables
 
     private EspecialidadeDAO especialidadeDAO;
+    private Long especialidadeId;
 }
