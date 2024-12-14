@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public abstract class BaseDao {
 
     private static final String URL = "jdbc:mysql://localhost:3306/clinica_medica";
-    private static final String USER = "root";
-    private static final String PASSWORD = "AzSx718293!";
+    private static final String USER = "clinica_medica";
+    private static final String PASSWORD = "12345678";
 
     protected static Connection connection;
 
