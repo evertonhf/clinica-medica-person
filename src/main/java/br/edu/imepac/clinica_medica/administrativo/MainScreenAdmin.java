@@ -4,16 +4,18 @@
  */
 package br.edu.imepac.clinica_medica.administrativo;
 
+import br.edu.imepac.clinica_medica.administrativo.especialidade.EspecialidadeCadastroScreen;
+import br.edu.imepac.clinica_medica.administrativo.especialidade.EspecialidadeListagemScreen;
 import br.edu.imepac.clinica_medica.administrativo.funcionario.FuncionarioCadastroScreen;
 import br.edu.imepac.clinica_medica.administrativo.funcionario.FuncionarioListagemScreen;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import br.edu.imepac.clinica_medica.telas.ScreenBase;
+
+import java.awt.*;
 
 /**
- *
  * @author ehf_v
  */
-public class MainScreenAdmin extends javax.swing.JFrame {
+public class MainScreenAdmin extends ScreenBase {
 
     /**
      * Creates new form MainScreenAccess
@@ -77,10 +79,20 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         listarEspecialidadeButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         listarEspecialidadeButton.setText("Listagem de especialidades");
         listarEspecialidadeButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        listarEspecialidadeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listarEspecialidadeButtonActionPerformed(evt);
+            }
+        });
 
         cadastrarEspecialidadeButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         cadastrarEspecialidadeButton.setText("Cadastrar especialidades");
         cadastrarEspecialidadeButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        cadastrarEspecialidadeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadastrarEspecialidadeButtonActionPerformed(evt);
+            }
+        });
 
         listarPerfilButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         listarPerfilButton.setText("Listagem de perfis");
@@ -130,45 +142,52 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         exitApplication.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         exitApplication.setForeground(new java.awt.Color(255, 255, 255));
         exitApplication.setText("Finalizar aplicação");
+        exitApplication.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitApplicationActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
-                    .addComponent(jSeparator3)
-                    .addComponent(jSeparator2)
-                    .addComponent(jSeparator5)
-                    .addComponent(jSeparator6)
-                    .addComponent(jSeparator7)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cadastrarEspecialidadeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(listarEspecialidadeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(perfilFuncionarioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(listarPerfilButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cadastrarFuncionarioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(listarFuncionarioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cadastrarPacienteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(listarPacienteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(exitApplication, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 10, Short.MAX_VALUE)))
+                            .addComponent(jSeparator1)
+                            .addComponent(jSeparator3)
+                            .addComponent(jSeparator2)
+                            .addComponent(jSeparator5)
+                            .addComponent(jSeparator6)
+                            .addComponent(jSeparator7)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cadastrarEspecialidadeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(listarEspecialidadeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(perfilFuncionarioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(listarPerfilButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cadastrarFuncionarioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(listarFuncionarioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cadastrarPacienteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(listarPacienteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(exitApplication, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 10, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cadastrarConvenioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(listarConvenioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cadastrarConvenioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(listarConvenioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,41 +265,20 @@ public class MainScreenAdmin extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cadastrarFuncionarioButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainScreenAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainScreenAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainScreenAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainScreenAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void cadastrarEspecialidadeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarEspecialidadeButtonActionPerformed
+        EspecialidadeCadastroScreen especialidadeCadastroScreen = new EspecialidadeCadastroScreen();
+        especialidadeCadastroScreen.setVisible(true);
+    }//GEN-LAST:event_cadastrarEspecialidadeButtonActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainScreenAdmin().setVisible(true);
-            }
-        });
-    }
+    private void listarEspecialidadeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarEspecialidadeButtonActionPerformed
+        EspecialidadeListagemScreen especialidadeListagemScreen = new EspecialidadeListagemScreen();
+        especialidadeListagemScreen.setVisible(true);
+    }//GEN-LAST:event_listarEspecialidadeButtonActionPerformed
+
+    private void exitApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitApplicationActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitApplicationActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cadastrarConvenioButton;

@@ -38,7 +38,7 @@ public class EspecialidadeDAO extends BaseDao {
 
     public List<Especialidade> readAll() {
         List<Especialidade> especialidades = new ArrayList<>();
-        String sql = "SELECT * FROM Especialidade";
+        String sql = "SELECT * FROM especialidade";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -48,10 +48,11 @@ public class EspecialidadeDAO extends BaseDao {
                         rs.getString("descricao")
                 ));
             }
+        return especialidades;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return especialidades;
+        return null;
     }
 
     public void update(Especialidade especialidade) {
@@ -66,7 +67,7 @@ public class EspecialidadeDAO extends BaseDao {
         }
     }
 
-    public void delete(int id) {
+    public void delete(Long id) {
         String sql = "DELETE FROM Especialidade WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, id);

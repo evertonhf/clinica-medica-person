@@ -32,11 +32,11 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Yu Gothic Medium" size="24" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Listagem de funcion&#xe1;rios"/>
+        <Property name="text" type="java.lang.String" value="Listagem de especialidades"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="6" y="18" width="-1" height="-1"/>
+          <AbsoluteConstraints x="6" y="18" width="380" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -66,7 +66,7 @@
         <Property name="iconTextGap" type="int" value="20"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteFuncionario"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteEspecialidade"/>
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

@@ -26,7 +26,7 @@ public class FuncionarioEditarScreen extends ScreenBase {
      * Creates new form FuncionarioCadastroScreen
      */
     public FuncionarioEditarScreen(Long id) {
-        this.idFuncionario = id;
+        this.funcionarioId = id;
 
         perfilDAO = new PerfilDAO();
         especialidadeDAO = new EspecialidadeDAO();
@@ -243,7 +243,7 @@ public class FuncionarioEditarScreen extends ScreenBase {
         jLabel15.setBounds(680, 500, 54, 25);
 
         sexoTextField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        sexoTextField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
+        sexoTextField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Masculino", "Feminino"}));
         getContentPane().add(sexoTextField);
         sexoTextField.setBounds(1020, 165, 178, 50);
 
@@ -329,7 +329,7 @@ public class FuncionarioEditarScreen extends ScreenBase {
         jLabel19.setBounds(620, 630, 170, 25);
 
         estadoTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        estadoTextField1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins" }));
+        estadoTextField1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"}));
         getContentPane().add(estadoTextField1);
         estadoTextField1.setBounds(750, 490, 450, 50);
 
@@ -355,7 +355,7 @@ public class FuncionarioEditarScreen extends ScreenBase {
         jLabel21.setBounds(460, 110, 130, 25);
 
         tipoFuncionarioField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        tipoFuncionarioField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MÉDICO", "ATENDENTE" }));
+        tipoFuncionarioField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"MÉDICO", "ATENDENTE"}));
         tipoFuncionarioField.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 stateChanged(evt);
@@ -385,7 +385,7 @@ public class FuncionarioEditarScreen extends ScreenBase {
             LocalDate dataNascimento = LocalDate.parse(dataNascimentoTextField.getText(), formatter);
 
             Funcionario funcionario = new Funcionario(
-                    this.idFuncionario,
+                    this.funcionarioId,
                     usuarioTextField.getText(),
                     Integer.parseInt(senhaTextField.getText()),
                     nomeCompletoTextfield.getText(),
@@ -460,7 +460,7 @@ public class FuncionarioEditarScreen extends ScreenBase {
     }
 
     private void loadDataFuncionario() {
-        Funcionario funcionario = funcionarioDAO.readById(this.idFuncionario);
+        Funcionario funcionario = funcionarioDAO.readById(this.funcionarioId);
 
         if (funcionario != null) {
             nomeCompletoTextfield.setText(funcionario.getNome());
@@ -503,41 +503,6 @@ public class FuncionarioEditarScreen extends ScreenBase {
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioEditarScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioEditarScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioEditarScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioEditarScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FuncionarioEditarScreen(1L).setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField bairroTextField;
@@ -586,7 +551,7 @@ public class FuncionarioEditarScreen extends ScreenBase {
     private javax.swing.JTextField usuarioTextField;
     // End of variables declaration//GEN-END:variables
 
-    private Long idFuncionario;
+    private Long funcionarioId;
     private List<Perfil> perfis;
     private List<Especialidade> especialidades;
     private EspecialidadeDAO especialidadeDAO;

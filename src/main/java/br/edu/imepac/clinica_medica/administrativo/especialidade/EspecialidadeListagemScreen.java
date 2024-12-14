@@ -2,12 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package br.edu.imepac.clinica_medica.administrativo.funcionario;
+package br.edu.imepac.clinica_medica.administrativo.especialidade;
 
 import br.edu.imepac.clinica_medica.daos.EspecialidadeDAO;
-import br.edu.imepac.clinica_medica.daos.FuncionarioDAO;
-import br.edu.imepac.clinica_medica.daos.PerfilDAO;
-import br.edu.imepac.clinica_medica.entidades.Funcionario;
+import br.edu.imepac.clinica_medica.entidades.Especialidade;
 import br.edu.imepac.clinica_medica.telas.ScreenBase;
 
 import javax.swing.*;
@@ -16,48 +14,33 @@ import java.util.List;
 /**
  * @author ehf_v
  */
-public class FuncionarioListagemScreen extends ScreenBase {
+public class EspecialidadeListagemScreen extends ScreenBase {
 
     /**
      * Creates new form FuncionarioCadastroScreen
      */
-    public FuncionarioListagemScreen() {
-        perfilDAO = new PerfilDAO();
-        especialidadeDAO = new EspecialidadeDAO();
-        funcionarioDAO = new FuncionarioDAO();
-
+    public EspecialidadeListagemScreen() {
         initComponents();
+        positionScreen(315, 140, 695, 900);
+
+        especialidadeDAO = new EspecialidadeDAO();
 
         loadDataFieldsFromDB();
-
-        positionScreen(315, 140, 695, 900);
     }
 
     private void loadDataFieldsFromDB() {
-        List<Funcionario> funcionarios = funcionarioDAO.readAll();
+        List<Especialidade> especialidades = especialidadeDAO.readAll();
 
-        for (Funcionario funcionario : funcionarios) {
-            if (funcionario.getPerfilId() != null) {
-                funcionario.setPerfil(perfilDAO.read(funcionario.getPerfilId()));
-            }
-        }
-        for (Funcionario funcionario : funcionarios) {
-            if (funcionario.getEspecialidadeId() != null) {
-                funcionario.setEspecialidade(especialidadeDAO.read(funcionario.getEspecialidadeId()));
-            }
-        }
-
-        tableFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
-                        new Object[funcionarios.size()][4],
-                        new String[]{"Id", "Nome", "E-mail", "Perfil"}
+        tableEspecialidades.setModel(new javax.swing.table.DefaultTableModel(
+                        new Object[especialidades.size()][3],
+                        new String[]{"Id", "Nome", "Descricao"}
                 )
         );
 
-        for (int i = 0; i < funcionarios.size(); i++) {
-            tableFuncionarios.setValueAt(funcionarios.get(i).getId(), i, 0);
-            tableFuncionarios.setValueAt(funcionarios.get(i).getNome(), i, 1);
-            tableFuncionarios.setValueAt(funcionarios.get(i).getEmail(), i, 2);
-            tableFuncionarios.setValueAt(funcionarios.get(i).getPerfil().getNome(), i, 3);
+        for (int i = 0; i < especialidades.size(); i++) {
+            tableEspecialidades.setValueAt(especialidades.get(i).getId(), i, 0);
+            tableEspecialidades.setValueAt(especialidades.get(i).getNome(), i, 1);
+            tableEspecialidades.setValueAt(especialidades.get(i).getDescricao(), i, 2);
         }
     }
 
@@ -75,7 +58,7 @@ public class FuncionarioListagemScreen extends ScreenBase {
         cancelarButton = new javax.swing.JButton();
         editarButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableFuncionarios = new javax.swing.JTable();
+        tableEspecialidades = new javax.swing.JTable();
         cancelarButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -84,9 +67,9 @@ public class FuncionarioListagemScreen extends ScreenBase {
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Yu Gothic Medium", 1, 24)); // NOI18N
-        jLabel1.setText("Listagem de funcionários");
+        jLabel1.setText("Listagem de especialidades");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(6, 18, 299, 40);
+        jLabel1.setBounds(6, 18, 380, 40);
         getContentPane().add(jSeparator2);
         jSeparator2.setBounds(6, 76, 1283, 3);
 
@@ -99,7 +82,7 @@ public class FuncionarioListagemScreen extends ScreenBase {
         cancelarButton.setIconTextGap(20);
         cancelarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteFuncionario(evt);
+                deleteEspecialidade(evt);
             }
         });
         getContentPane().add(cancelarButton);
@@ -120,7 +103,7 @@ public class FuncionarioListagemScreen extends ScreenBase {
         getContentPane().add(editarButton);
         editarButton.setBounds(950, 340, 250, 80);
 
-        tableFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
+        tableEspecialidades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -131,7 +114,7 @@ public class FuncionarioListagemScreen extends ScreenBase {
 
             }
         ));
-        jScrollPane1.setViewportView(tableFuncionarios);
+        jScrollPane1.setViewportView(tableEspecialidades);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(20, 110, 910, 402);
@@ -155,11 +138,11 @@ public class FuncionarioListagemScreen extends ScreenBase {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarButtonActionPerformed
-        if (tableFuncionarios.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione um funcionário para editar.");
+        if (tableEspecialidades.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione uma especialidade para editar.");
         } else {
-            Long id = (Long) tableFuncionarios.getValueAt(tableFuncionarios.getSelectedRow(), 0);
-            new FuncionarioEditarScreen(id).setVisible(true);
+            Long id = (Long) tableEspecialidades.getValueAt(tableEspecialidades.getSelectedRow(), 0);
+            new EspecialidadeEditarScreen(id).setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_editarButtonActionPerformed
@@ -168,17 +151,18 @@ public class FuncionarioListagemScreen extends ScreenBase {
         dispose();
     }//GEN-LAST:event_cancelarButton1ActionPerformed
 
-    private void deleteFuncionario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFuncionario
-        if (tableFuncionarios.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione um funcionário para excluir.");
+    private void deleteEspecialidade(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFuncionario
+        if (tableEspecialidades.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione uma especialidade para excluir.");
         } else {
-            Long id = (Long) tableFuncionarios.getValueAt(tableFuncionarios.getSelectedRow(), 0);
-            funcionarioDAO.delete(id);
+            Long id = (Long) tableEspecialidades.getValueAt(tableEspecialidades.getSelectedRow(), 0);
+            especialidadeDAO.delete(id);
             loadDataFieldsFromDB();
+            JOptionPane.showMessageDialog(this, "Especialidade excluída com sucesso.");
         }
     }//GEN-LAST:event_deleteFuncionario
 
- 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelarButton;
     private javax.swing.JButton cancelarButton1;
@@ -186,11 +170,9 @@ public class FuncionarioListagemScreen extends ScreenBase {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable tableFuncionarios;
+    private javax.swing.JTable tableEspecialidades;
     // End of variables declaration//GEN-END:variables
 
 
     private EspecialidadeDAO especialidadeDAO;
-    private FuncionarioDAO funcionarioDAO;
-    private PerfilDAO perfilDAO;
 }

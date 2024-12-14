@@ -170,6 +170,9 @@
         <Property name="text" type="java.lang.String" value="Listagem de especialidades"/>
         <Property name="horizontalAlignment" type="int" value="2"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="listarEspecialidadeButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="cadastrarEspecialidadeButton">
       <Properties>
@@ -179,6 +182,9 @@
         <Property name="text" type="java.lang.String" value="Cadastrar especialidades"/>
         <Property name="horizontalAlignment" type="int" value="2"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cadastrarEspecialidadeButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator3">
     </Component>
@@ -267,6 +273,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Finalizar aplica&#xe7;&#xe3;o"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitApplicationActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
