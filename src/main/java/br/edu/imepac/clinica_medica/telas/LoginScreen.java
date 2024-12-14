@@ -147,8 +147,9 @@ public class LoginScreen extends ScreenBase {
             } else if (senhaTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Campo senha é obrigatório!");
             } else {
-                int senha = Integer.parseInt(senhaTextField.getText());
                 Funcionario funcionario = funcionarioDAO.readByUsuario(usuarioTextField.getText());
+                
+                int senha = Integer.parseInt(senhaTextField.getText());
 
                 if (funcionario != null && funcionario.getSenha() == senha) {
                     MainScreenAccess mainScreenAccess = new MainScreenAccess();
